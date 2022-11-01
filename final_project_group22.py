@@ -1,4 +1,3 @@
-
 import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
@@ -43,6 +42,13 @@ df_movies = pd.read_csv('tmdb_5000_movies.csv', na_values = missing_values2)
 df_movies = df_movies.dropna()
 st.write(df_movies)
 
+# set the slider
+df_movies.revenue = df_movies.revenue/1000000
+revenue_value_filter2 = st.slider('Movies revenue(Unit: Million)', 0, 281, 52) 
+
+# filter data by revenue value
+df_movies = df_movies[df_movies.revenue <= revenue_value_filter2]
+
 # set the sidebar of a radio button
 vote_filter = st.sidebar.radio('Choose vote level :', ('Low', 'Medium', 'High'))  
 
@@ -61,5 +67,3 @@ plt.pie(df_movies.original_language.value_counts(),startangle=90,autopct='%.2f%%
 plt.axis('equal')
 plt.title('Movie language', fontdict={'fontsize':22,'fontweight':'bold'})
 st.pyplot(f)
-
-
